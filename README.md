@@ -333,16 +333,35 @@ for s_child in os.listdir(s_path):
 ```
 ## 模块与包
 ### 3.输入日期， 判断这一天是这一年的第几天？
+第一种写法
 ```python
 import datetime
 def dayofyear():
     year = input("请输入年份: ")
     month = input("请输入月份: ")
     day = input("请输入天: ")
-    date1 = datetime.date(year=int(year),month=int(month),day=int(day))
-    date2 = datetime.date(year=int(year),month=1,day=1)
-    return (date1-date2).days+1
+    day = datetime.date(year=int(year),month=int(month),day=int(day))
+    return day.strftime("%j")
 ```
+第二种写法
+```
+def is_leap(year):
+    if (int(year) % 4 == 0 and int(year) % 100 != 0) or int(year) % 400 == 0:
+        return True
+    else:
+        return False
+
+def day_of_year(year, month, day):
+    leap_of_year = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    no_leap_year = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    month = int(month) - 1
+    day = int(day)
+    if is_leap(year):
+        return sum(leap_of_year[:month]) + day
+    else:
+        return sum(no_leap_year[:month]) + day
+```
+
 ### 4.打乱一个排好序的list对象alist？
 ```python
 import random
